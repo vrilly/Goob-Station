@@ -1,15 +1,29 @@
 - type: entity
   parent: ClothingHeadBase
-  id: WeldingMaskBase
+  id: ClothingHeadHatWelding
   name: welding mask
-  abstract: true
   components:
+  - type: Sprite
+    sprite: Clothing/Head/Welding/welding.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: Clothing/Head/Welding/welding.rsi
   - type: Item
     storedRotation: 0
-  - type: IngestionBlocker
-  - type: FlashImmunity
-  - type: IdentityBlocker
-  - type: EyeProtection
+  - type: ItemToggle # Welding mask starts in an activated state
+    activated: true
+  #- type: ToggleClothing
+  #  action: ActionToggleWeldingMask
+  #  hideOnToggle: true
+  - type: Appearance #- type: WeldingMask
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon-up}
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 100
@@ -24,26 +38,17 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: ComponentToggler
+    components:
+    - type: IngestionBlocker
+    - type: FlashImmunity
+    - type: IdentityBlocker
+    - type: EyeProtection
+    - type: VisionDarkener
+      strength: 6
 
 - type: entity
-  parent: WeldingMaskBase
-  id: ClothingHeadHatWelding
-  name: welding mask
-  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Welding/welding.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Welding/welding.rsi
-  - type: Tag
-    tags:
-    - HamsterWearable
-    - WhitelistChameleon
-    - WeldingMask
-    - DroneUsable # Goobstation
-
-- type: entity
-  parent: WeldingMaskBase
+  parent: ClothingHeadHatWelding
   id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
   description: A painted welding helmet, this one has flames on it.
@@ -54,7 +59,7 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: ClothingHeadHatWelding
   id: ClothingHeadHatWeldingMaskFlameBlue
   name: blue-flame welding mask
   description: A painted welding helmet, this one has blue flames on it.
@@ -65,7 +70,7 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: ClothingHeadHatWelding
   id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
   description: A welding helmet, painted in crimson.
